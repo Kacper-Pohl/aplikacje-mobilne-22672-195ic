@@ -5,11 +5,11 @@ Do wykonania zadania wykorzystałem [expo.dev](https://expo.dev) do budowy aplik
 Aplikacja jest oparta na podstawie https://github.com/victorsalesdev/calculator
 
 
-####Screen aplikacji z telefonu
+#### Screen aplikacji z telefonu
 
 ![](screens/6.jpg)
 
-####Opis
+#### Opis
 
 Wykorzystanie useState do obecnej i poprzedniej liczby wpisanej do kalkulatora, oraz przypisanie wszystkich znaków do zmiennej buttons.
 ![](screens/3.png)
