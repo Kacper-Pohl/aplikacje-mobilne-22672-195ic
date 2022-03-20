@@ -1,0 +1,132 @@
+import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Vibration} from 'react-native';
+import {useState} from 'react';
+import { Entypo } from '@expo/vector-icons';
+
+export default function App() {
+  const [currentNumber, setCurrentNumber] = useState('');
+  const [lastNumber, setLastNumber] = useState('');
+
+  const buttons = ['C', 'DEL', '/', 7, 8, 9, '*', 4, 5, 6, '-', 1, 2, 3, '+', 0, '.', '=']
+
+  function calculator() {
+
+    let lastArr = currentNumber[currentNumber.length-1];
+
+    if(lastArr === '/' || lastArr === '*' || lastArr === '-' || lastArr === '+' || lastArr === '.') {
+      setCurrentNumber(currentNumber)
+      return
+    }
+    else {
+      let result = eval(currentNumber).toString();
+      setCurrentNumber(result)
+      return
+    }
+  }
+
+  function handleInput(buttonPressed) {
+    if(buttonPressed  === '+' || buttonPressed === '-' || buttonPressed === '*' || buttonPressed === '/') {
+      Vibration.vibrate(35);
+      setCurrentNumber(currentNumber + buttonPressed)
+      return
+    }
+    else if (buttonPressed === 1 || buttonPressed === 2 || buttonPressed === 3 || buttonPressed === 4 || buttonPressed === 5 ||
+        buttonPressed === 6 || buttonPressed === 7 || buttonPressed === 8 || buttonPressed === 9 || buttonPressed === 0 || buttonPressed === '.' ) {
+      Vibration.vibrate(35);
+    }
+    switch(buttonPressed) {
+      case 'DEL':
+        Vibration.vibrate(35);
+        setCurrentNumber(currentNumber.substring(0, (currentNumber.length - 1)))
+        return
+      case 'C':
+        Vibration.vibrate(35);
+        setLastNumber('')
+        setCurrentNumber('')
+        return
+      case '=':
+        Vibration.vibrate(35);
+        setLastNumber(currentNumber + '=')
+        calculator()
+        return
+    }
+    setCurrentNumber(currentNumber + buttonPressed)
+  }
+
+  const styles = StyleSheet.create({
+    results: {
+      backgroundColor:  '#f5f5f5',
+      maxWidth: '100%',
+      minHeight: '35%',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end',
+    },
+    resultText: {
+      maxHeight: 45,
+      color: '#be8c30',
+      margin: 15,
+      fontSize: 35,
+    },
+    historyText: {
+      color: '#7c7c7c',
+      fontSize: 20,
+      marginRight: 10,
+      alignSelf: 'flex-end',
+    },
+    buttons: {
+      width: '100%',
+      height: '35%',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: '22%',
+      minHeight: '50%',
+      flex: 2,
+      margin: 2,
+      borderRadius: 36,
+    },
+    textButton: {
+      color: '#7c7c7c',
+      fontSize: 28,
+    }
+  })
+
+  return(
+      <View>
+        <View style={styles.results}>
+          <Text style={styles.historyText}>{lastNumber}</Text>
+          <Text style={styles.resultText}>{currentNumber}</Text>
+        </View>
+        <View style={styles.buttons}>
+          {buttons.map((button) =>
+              button === '=' || button === '/' || button === '*' || button === '-' || button === '+' ?
+                  <TouchableOpacity key={button} style={[styles.button, {backgroundColor: '#be8c30'} ]} onPress={() => handleInput(button)}>
+                    <Text style={[styles.textButton, {color: 'white', fontSize: 28} ]}>{button}</Text>
+                  </TouchableOpacity>
+                  :
+                  button === 0 ?
+                      <TouchableOpacity key={button} style={[styles.button, {backgroundColor: typeof(button) === 'number' ? '#fff' : '#ededed', minWidth: '36%'} ]} onPress={() => handleInput(button)}>
+                        <Text style={styles.textButton}>{button}</Text>
+                      </TouchableOpacity>
+                      :
+                      button === '.' || button === 'DEL' ?
+                          <TouchableOpacity key={button} style={[styles.button, {backgroundColor: button === '.' ? '#fff' : '#ededed', minWidth: '37%'} ]} onPress={() => handleInput(button)}>
+                            <Text style={styles.textButton}>{button}</Text>
+                          </TouchableOpacity>
+                          :
+                          button === 'C' ?
+                              <TouchableOpacity key={button} style={[styles.button, {backgroundColor: '#ededed', minWidth: '36%'} ]} onPress={() => handleInput(button)}>
+                                <Text style={styles.textButton}>{button}</Text>
+                              </TouchableOpacity>
+                              :
+                              <TouchableOpacity key={button} style={[styles.button]} onPress={() => handleInput(button)}>
+                                <Text style={styles.textButton}>{button}</Text>
+                              </TouchableOpacity>
+          )}
+        </View>
+      </View>
+  );
+}
