@@ -1,5 +1,7 @@
 # Lab 2
 
+Aplikacja utworzona za pomocą expo.dev, screeny aplikacji z telefonu na androidzie.
+
 ### App.js
 ![](scrns/0.png)
 
