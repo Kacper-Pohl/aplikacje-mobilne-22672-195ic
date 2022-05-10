@@ -287,8 +287,8 @@ export default class ToastScr extends Component {
   }
   
   ````
-![](screens/5_1.jpg)
 ![](screens/5_2.jpg)
+![](screens/5_1.jpg)
 
 ## DatePicker
 
